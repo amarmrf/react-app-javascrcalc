@@ -32,8 +32,8 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      input: "0"
-      equal: false,
+      input: "0",
+      equal: false
     }
   }
   
