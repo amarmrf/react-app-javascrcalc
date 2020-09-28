@@ -54,14 +54,15 @@ class App extends React.Component {
 
   handleZero = (val) => {
     if (this.state.input==="0"||(!this.isOperator(this.state.input[this.state.input.length-2])&&this.state.input[this.state.input.length-1]==="0")) return
-    this.setState(state=>({//equal:state.equal===false,
-    input:state.equal===true?val.toString():state.input.toString()+val}))
+    this.setState(state=>({equal:false,
+    input:(state.equal===true && !isNaN(val))?val.toString():state.input.toString()+val,
+    }))
   }
 
   handleClick = (val) => {
     this.setState(state=>({
-      //equal:state.equal===false,
-      input:state.equal===true?val.toString():state.input==="0"?val:(!this.isOperator(this.state.input[this.state.input.length-2])&&this.state.input[this.state.input.length-1]==="0")?(state.input.slice(0,-1).toString()+val):
+      equal:false,
+      input:(state.equal===true && !isNaN(val)) ?val.toString():state.input==="0"?val:(!this.isOperator(this.state.input[this.state.input.length-2])&&this.state.input[this.state.input.length-1]==="0")?(state.input.slice(0,-1).toString()+val):
         state.input.toString()+val
         }))
   }
