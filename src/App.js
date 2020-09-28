@@ -33,6 +33,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       input: "0"
+      equal: false,
     }
   }
   
@@ -41,25 +42,24 @@ class App extends React.Component {
   }
 
   handleEqual = () => {
-    this.setState(state=>({input:
+    this.setState(state=>({equal:true, input:
       state.input==="0"?"0":
       evaluate(state.input).toString()
       }))
   }
 
   handleClear = () => {
-    this.setState({input:"0"})
+    this.setState({input:"0",equal:false})
   }
 
   handleZero = (val) => {
     if (this.state.input==="0"||(!this.isOperator(this.state.input[this.state.input.length-2])&&this.state.input[this.state.input.length-1]==="0")) return
-    this.setState(state=>({input:state.input.toString()+val}))
+    this.setState(state=>({equal:state.equal===false,input:state.equal===true?val.toString():state.input.toString()+val}))
   }
 
   handleClick = (val) => {
     this.setState(state=>({
-      input:
-        state.input==="0"?val:(!this.isOperator(this.state.input[this.state.input.length-2])&&this.state.input[this.state.input.length-1]==="0")?(state.input.slice(0,-1).toString()+val):
+      equal:state.equal===false,input:state.equal===true?val.toString():state.input==="0"?val:(!this.isOperator(this.state.input[this.state.input.length-2])&&this.state.input[this.state.input.length-1]==="0")?(state.input.slice(0,-1).toString()+val):
         state.input.toString()+val
         }))
   }
