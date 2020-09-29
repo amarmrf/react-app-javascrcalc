@@ -39,12 +39,23 @@ class App extends React.Component {
     this.setState(state=>({
       decimal:!this.isOperator(val)?false:state.decimal,
       equal:false,
-      input:(state.equal===true && !isNaN(val)) ?val.toString():state.input==="0"?val:(!this.isOperator(this.state.input[this.state.input.length-2])&&this.state.input[this.state.input.length-1]==="0")?(state.input.slice(0,-1).toString()+val):
-        state.input.toString()+val
+      input:(state.equal===true && !isNaN(val))?val.toString():
+      state.input==="0"?val:
+      (
+        !this.isOperator(state.input[this.state.input.length-2])&&state.input[this.state.input.length-1]==="0"
+      )
+      ?state.input.slice(0,-1).toString()+val:
+      (state.input.length>=2&&!this.isOperator(state.input[state.input.length-2])&&!this.isOperator(state.input[state.input.length-1])&&(val==="/"||val==="+"||val==="*"))
+      ?state.input.slice(0,-2).toString()+val.toString():
+      (
+        (state.input[state.input.length-1]==="*"||state.input[state.input.length-1]==="/"||state.input[state.input.length-1]==="+"||state.input[state.input.length-1]==="-")&&
+        (val==="*"||val==="/")
+      )
+      ?state.input.slice(0,-1).toString()+val:
+      state.input.toString()+val
         }))
   }
-  //just take the LAST input NUMBER and check it, if it is decimal then return
-  //regex is /\d+$/ match this to get the LAST input number
+
   handleDecimal = (val) => {
     if(this.state.decimal===true) return
     this.setState(state=>({
